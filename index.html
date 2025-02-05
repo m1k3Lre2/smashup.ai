@@ -13,9 +13,27 @@
     
     <section class="instagram-feed">
         <h2>Follow Us on Instagram</h2>
-        <div class="insta-container" id="instagram-feed">
-            <!-- Instagram feed will be dynamically loaded here -->
-        </div>
+       <div id="instagram-feed"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $.ajax({
+      url: `https://graph.instagram.com/me/media?fields=id,caption,media_url,permalink&access_token=YOUR_ACCESS_TOKEN`,
+      type: "GET",
+      success: function(data) {
+        data.data.forEach(post => {
+          $("#instagram-feed").append(`
+            <a href="${post.permalink}" target="_blank">
+              <img src="${post.media_url}" width="150" height="150"/>
+            </a>
+          `);
+        });
+      }
+    });
+  });
+</script>
+
     </section>
     
     <script src="script.js"></script>
